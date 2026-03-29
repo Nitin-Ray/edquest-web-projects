@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Calculator</title>
+</head>
+<body>
+<script>
+  // ── All UI is created using JavaScript only ──
+
+  let expression = '';
+  let justCalculated = false;
+
+  // ── Page background ──
+  document.body.style.margin = '0';
+  document.body.style.background = '#f0f0f0';
+  document.body.style.display = 'flex';
+  document.body.style.justifyContent = 'center';
+  document.body.style.alignItems = 'center';
+  document.body.style.minHeight = '100vh';
+  document.body.style.fontFamily = 'Segoe UI, sans-serif';
+
+  // ── Calculator box ──
+  const calc = document.createElement('div');
+  calc.style.background = '#fff';
+  calc.style.border = '1px solid #ccc';
+  calc.style.borderRadius = '12px';
+  calc.style.padding = '20px';
+  calc.style.width = '300px';
+  calc.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+  document.body.appendChild(calc);
+
+  // ── Display box ──
+  const displayBox = document.createElement('div');
+  displayBox.style.background = '#f5f5f5';
+  displayBox.style.border = '1px solid #ddd';
+  displayBox.style.borderRadius = '8px';
+  displayBox.style.padding = '14px 16px';
+  displayBox.style.textAlign = 'right';
+  displayBox.style.marginBottom = '16px';
+  calc.appendChild(displayBox);
+
+  // Expression line (small top text)
+  const exprEl = document.createElement('div');
+  exprEl.style.fontSize = '0.8rem';
+  exprEl.style.color = '#aaa';
+  exprEl.style.minHeight = '18px';
+  exprEl.style.marginBottom = '4px';
+  displayBox.appendChild(exprEl);
+
+  // Main result line
+  const resultEl = document.createElement('div');
+  resultEl.style.fontSize = '2rem';
+  resultEl.style.color = '#222';
+  resultEl.style.fontWeight = '600';
+  resultEl.style.wordBreak = 'break-all';
+  resultEl.textContent = '0';
+  displayBox.appendChild(resultEl);
+
+  // ── Button grid ──
+  const grid = document.createElement('div');
+  grid.style.display = 'grid';
+  grid.style.gridTemplateColumns = 'repeat(4, 1fr)';
+  grid.style.gap = '8px';
+  calc.appendChild(grid);
+
+  // Button layout: [label, type, colspan]
+  const buttonLayout = [
+    ['AC', 'clear', 1], ['⌫', 'del', 1], ['%', 'op', 1], ['÷', 'op', 1],
+    ['7',  'num',   1], ['8', 'num', 1],  ['9', 'num', 1], ['×', 'op', 1],
+    ['4',  'num',   1], ['5', 'num', 1],  ['6', 'num', 1], ['−', 'op', 1],
+    ['1',  'num',   1], ['2', 'num', 1],  ['3', 'num', 1], ['+', 'op', 1],
+    ['0',  'num',   1], ['.', 'num', 1],  ['=', 'eq',  2],
+  ];
+
+  buttonLayout.forEach(([label, type, span]) => {
+    const btn = document.createElement('button');
+    btn.textContent = label;
+
+    // Base styles
+    btn.style.padding = '16px';
+    btn.style.fontSize = '1rem';
+    btn.style.border = '1px solid #ddd';
+    btn.style.borderRadius = '8px';
+    btn.style.cursor = 'pointer';
+    btn.style.background = '#fff';
+    btn.style.color = '#333';
+
+    if (span > 1) btn.style.gridColumn = 'span ' + span;
+
+    // Type-based colors
+    if (type === 'clear') {
+      btn.style.background = '#fff0f0';
+      btn.style.color = '#e05555';
+      btn.style.borderColor = '#f5c0c0';
+    } else if (type === 'op') {
+      btn.style.background = '#f7f7f7';
+      btn.style.color = '#555';
+    } else if (type === 'eq') {
+      btn.style.background = '#222';
+      btn.style.color = '#fff';
+      btn.style.borderColor = '#222';
+    }
+
+    // Hover effect
+    btn.addEventListener('mouseover', () => {
+      if (type === 'eq') btn.style.background = '#444';
+      else if (type === 'clear') btn.style.background = '#ffe0e0';
+      else btn.style.background = '#ebebeb';
+    });
+    btn.addEventListener('mouseout', () => {
+      if (type === 'eq') btn.style.background = '#222';
+      else if (type === 'clear') btn.style.background = '#fff0f0';
+      else if (type === 'op') btn.style.background = '#f7f7f7';
+      else btn.style.background = '#fff';
+    });
+
+    // Click actions
+    btn.addEventListener('click', () => {
+      if (label === 'AC') clearAll();
+      else if (label === '⌫') deleteLast();
+      else if (label === '=') calculate();
+      else if (label === '.') appendDot();
+      else if (['÷','×','−','+','%'].includes(label)) appendOp(label);
+      else appendNum(label);
+    });
+
+    grid.appendChild(btn);
+  });
+
+  // ── Logic functions ──
+  function toReal(op) {
+    return op === '÷' ? '/' : op === '×' ? '*' : op === '−' ? '-' : op;
+  }
+  function toDisplay(expr) {
+    return expr.replace(/\*/g,'×').replace(/\//g,'÷').replace(/-/g,'−');
+  }
+
+  function appendNum(n) {
+    if (justCalculated) { expression = ''; justCalculated = false; }
+    expression += n;
+    resultEl.textContent = toDisplay(expression);
+  }
+
+  function appendOp(op) {
+    justCalculated = false;
+    const realOp = toReal(op);
+    const last = expression.slice(-1);
+    if (['+','-','*','/','%'].includes(last)) expression = expression.slice(0,-1);
+    expression += realOp;
+    exprEl.textContent = toDisplay(expression);
+    resultEl.textContent = toDisplay(expression);
+  }
+
+  function appendDot() {
+    if (justCalculated) { expression = '0'; justCalculated = false; }
+    const parts = expression.split(/[+\-*\/]/);
+    if (!parts[parts.length-1].includes('.')) {
+      if (!parts[parts.length-1]) expression += '0';
+      expression += '.';
+      resultEl.textContent = toDisplay(expression);
+    }
+  }
+
+  function deleteLast() {
+    if (justCalculated) { clearAll(); return; }
+    expression = expression.slice(0,-1);
+    resultEl.textContent = toDisplay(expression) || '0';
+  }
+
+  function clearAll() {
+    expression = '';
+    exprEl.textContent = '';
+    resultEl.textContent = '0';
+    justCalculated = false;
+  }
+
+  function calculate() {
+    if (!expression) return;
+    try {
+      exprEl.textContent = toDisplay(expression) + ' =';
+      const res = Function('"use strict"; return (' + expression + ')')();
+      if (!isFinite(res)) throw new Error();
+      const rounded = parseFloat(res.toFixed(10));
+      resultEl.textContent = rounded;
+      expression = String(rounded);
+      justCalculated = true;
+    } catch {
+      resultEl.textContent = 'Error';
+      expression = '';
+      justCalculated = false;
+    }
+  }
+
+  // ── Keyboard support ──
+  document.addEventListener('keydown', e => {
+    if (e.key >= '0' && e.key <= '9') appendNum(e.key);
+    else if (e.key === '+') appendOp('+');
+    else if (e.key === '-') appendOp('−');
+    else if (e.key === '*') appendOp('×');
+    else if (e.key === '/') { e.preventDefault(); appendOp('÷'); }
+    else if (e.key === '%') appendOp('%');
+    else if (e.key === '.') appendDot();
+    else if (e.key === 'Enter' || e.key === '=') calculate();
+    else if (e.key === 'Backspace') deleteLast();
+    else if (e.key === 'Escape') clearAll();
+  });
+</script>
+</body>
+</html>

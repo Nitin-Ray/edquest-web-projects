@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nitin Ray | Portfolio</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9f9;
+      color: #222;
+    }
+
+    nav {
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+      padding: 14px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    nav .logo { font-size: 1.2rem; font-weight: 700; color: #333; }
+    nav ul { list-style: none; display: flex; gap: 24px; }
+    nav ul a { text-decoration: none; color: #555; font-size: 0.9rem; }
+    nav ul a:hover { color: #000; }
+
+   
+    section { padding: 60px 40px; max-width: 860px; margin: 0 auto; }
+
+    #about {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      padding-top: 80px;
+    }
+    #about img, #about .avatar-placeholder {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #ddd;
+      flex-shrink: 0;
+    }
+    #about .avatar-placeholder {
+      background: #e0e0e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+    #about h1 { font-size: 2rem; margin-bottom: 8px; }
+    #about p { color: #555; line-height: 1.7; font-size: 0.97rem; }
+    #about .tagline { font-size: 1rem; color: #888; margin-bottom: 12px; }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #e0e0e0;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+   
+    #skills h2 { font-size: 1.4rem; margin-bottom: 20px; }
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .skill-tag {
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 7px 16px;
+      border-radius: 20px;
+      font-size: 0.88rem;
+      color: #333;
+    }
+
+    
+    #projects h2 { font-size: 1.4rem; margin-bottom: 20px; }
+    .project-card {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+    .project-card h3 { font-size: 1rem; margin-bottom: 6px; }
+    .project-card p { font-size: 0.88rem; color: #666; line-height: 1.6; }
+    .project-card .tech {
+      margin-top: 10px;
+      font-size: 0.8rem;
+      color: #999;
+    }
+
+   
+    #contact h2 { font-size: 1.4rem; margin-bottom: 20px; }
+    #contact form { display: flex; flex-direction: column; gap: 12px; max-width: 500px; }
+    #contact input,
+    #contact textarea {
+      padding: 10px 14px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.93rem;
+      outline: none;
+      background: #fff;
+    }
+    #contact input:focus,
+    #contact textarea:focus { border-color: #888; }
+    #contact textarea { resize: vertical; min-height: 110px; }
+    #contact button {
+      padding: 10px 24px;
+      background: #222;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.93rem;
+      cursor: pointer;
+      width: fit-content;
+    }
+    #contact button:hover { background: #444; }
+    #form-msg { font-size: 0.88rem; color: green; margin-top: 6px; }
+
+  
+    footer {
+      text-align: center;
+      padding: 24px;
+      font-size: 0.82rem;
+      color: #aaa;
+      border-top: 1px solid #e5e5e5;
+    }
+
+    @media (max-width: 600px) {
+      #about { flex-direction: column; text-align: center; }
+      nav { padding: 14px 20px; }
+      nav ul { gap: 14px; }
+      section { padding: 40px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+
+<nav>
+  <div class="logo">Nitin Ray</div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+
+<section id="about">
+  <!-- Apni photo lagani ho toh: <img src="photo.jpg" alt="Nitin Ray"> -->
+  <img src="notepad_37173.jpg" alt="Nitin Ray" style="width:100%;height:100%;object-fit:cover;border-radius:16px;">
+  <div>
+    <h1>Hi, I'm Nitin Ray </h1>
+    <p class="tagline">B.Sc. Computer Science Student · VIVA College, Virar</p>
+    <p>I'm a second-year CS student who enjoys building web apps, Android apps, and experimenting with Python and AI tools. Currently learning web development and looking for internship opportunities.</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+
+<section id="skills">
+  <h2>Skills</h2>
+  <div class="skills-list">
+    <span class="skill-tag">HTML</span>
+    <span class="skill-tag">CSS</span>
+    <span class="skill-tag">JavaScript</span>
+    <span class="skill-tag">Python</span>
+    <span class="skill-tag">Kotlin (Android)</span>
+    <span class="skill-tag">Java</span>
+    <span class="skill-tag">Git & GitHub</span>
+    <span class="skill-tag">Bootstrap</span>
+    <span class="skill-tag">Pandas & NumPy</span>
+  </div>
+</section>
+
+<hr class="divider">
+
+
+<section id="projects">
+  <h2>Projects</h2>
+
+  <div class="project-card">
+    <h3>JARVIS – AI Voice Assistant</h3>
+    <p>A Python-based desktop voice assistant that can recognize voice commands, respond with text-to-speech, open Windows apps, and answer queries using AI.</p>
+    <div class="tech">Python · SpeechRecognition · pyttsx3 · OpenAI API</div>
+  </div>
+
+  <div class="project-card">
+    <h3>Hand Gesture Mouse Controller</h3>
+    <p>Controls the mouse cursor using hand gestures detected through a webcam in real-time, without any physical touch.</p>
+    <div class="tech">Python · MediaPipe · OpenCV · PyAutoGUI</div>
+  </div>
+
+  <div class="project-card">
+    <h3>Calculator Web App</h3>
+    <p>A functional calculator built using HTML, CSS and JavaScript that performs basic arithmetic operations with keyboard support.</p>
+    <div class="tech">HTML · CSS · JavaScript</div>
+  </div>
+
+  <div class="project-card">
+    <h3>To-Do List App</h3>
+    <p>A task manager web app where users can add, complete, and delete tasks. Includes priority tags and task filtering.</p>
+    <div class="tech">HTML · CSS · JavaScript</div>
+  </div>
+
+</section>
+
+
+
+ 
+<section id="contact">
+  <h2>Contact</h2>
+  <form>
+    <input type="text" id="fname" placeholder="Your Name" required>
+    <input type="email" id="femail" placeholder="Your Email" required>
+    <textarea id="fmsg" placeholder="Your message..." required></textarea>
+    <button type="submit">Send Message</button>
+  </form>
+  <p id="form-msg"></p>
+</section>
+
+
+<footer>
+  © 2025 Nitin Ray · Made with HTML, CSS & JavaScript
+</footer>
+
+
+
+</body>
+</html>
