@@ -6,7 +6,7 @@
 </head>
 <body>
 <script>
-  // ── All UI is created using JavaScript only ──
+  
 
   let expression = '';
   let justCalculated = false;
@@ -20,7 +20,7 @@
   document.body.style.minHeight = '100vh';
   document.body.style.fontFamily = 'Segoe UI, sans-serif';
 
-  // ── Calculator box ──
+
   const calc = document.createElement('div');
   calc.style.background = '#fff';
   calc.style.border = '1px solid #ccc';
@@ -30,7 +30,7 @@
   calc.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
   document.body.appendChild(calc);
 
-  // ── Display box ──
+ 
   const displayBox = document.createElement('div');
   displayBox.style.background = '#f5f5f5';
   displayBox.style.border = '1px solid #ddd';
@@ -40,7 +40,7 @@
   displayBox.style.marginBottom = '16px';
   calc.appendChild(displayBox);
 
-  // Expression line (small top text)
+
   const exprEl = document.createElement('div');
   exprEl.style.fontSize = '0.8rem';
   exprEl.style.color = '#aaa';
@@ -48,7 +48,7 @@
   exprEl.style.marginBottom = '4px';
   displayBox.appendChild(exprEl);
 
-  // Main result line
+  
   const resultEl = document.createElement('div');
   resultEl.style.fontSize = '2rem';
   resultEl.style.color = '#222';
@@ -57,14 +57,14 @@
   resultEl.textContent = '0';
   displayBox.appendChild(resultEl);
 
-  // ── Button grid ──
+
   const grid = document.createElement('div');
   grid.style.display = 'grid';
   grid.style.gridTemplateColumns = 'repeat(4, 1fr)';
   grid.style.gap = '8px';
   calc.appendChild(grid);
 
-  // Button layout: [label, type, colspan]
+  
   const buttonLayout = [
     ['AC', 'clear', 1], ['⌫', 'del', 1], ['%', 'op', 1], ['÷', 'op', 1],
     ['7',  'num',   1], ['8', 'num', 1],  ['9', 'num', 1], ['×', 'op', 1],
@@ -77,7 +77,7 @@
     const btn = document.createElement('button');
     btn.textContent = label;
 
-    // Base styles
+   
     btn.style.padding = '16px';
     btn.style.fontSize = '1rem';
     btn.style.border = '1px solid #ddd';
@@ -88,7 +88,7 @@
 
     if (span > 1) btn.style.gridColumn = 'span ' + span;
 
-    // Type-based colors
+    
     if (type === 'clear') {
       btn.style.background = '#fff0f0';
       btn.style.color = '#e05555';
@@ -102,7 +102,7 @@
       btn.style.borderColor = '#222';
     }
 
-    // Hover effect
+    
     btn.addEventListener('mouseover', () => {
       if (type === 'eq') btn.style.background = '#444';
       else if (type === 'clear') btn.style.background = '#ffe0e0';
@@ -115,7 +115,7 @@
       else btn.style.background = '#fff';
     });
 
-    // Click actions
+   
     btn.addEventListener('click', () => {
       if (label === 'AC') clearAll();
       else if (label === '⌫') deleteLast();
@@ -128,7 +128,7 @@
     grid.appendChild(btn);
   });
 
-  // ── Logic functions ──
+  
   function toReal(op) {
     return op === '÷' ? '/' : op === '×' ? '*' : op === '−' ? '-' : op;
   }
@@ -192,7 +192,7 @@
     }
   }
 
-  // ── Keyboard support ──
+ 
   document.addEventListener('keydown', e => {
     if (e.key >= '0' && e.key <= '9') appendNum(e.key);
     else if (e.key === '+') appendOp('+');
